@@ -38,7 +38,7 @@
 
 	const boardinfo = ubus.call("system", "board");
 	const hostname = striptags(boardinfo?.hostname ?? '?');
-	const model = striptags(boardinfo?.model ?? '');
+	const model = replace(boardinfo?.model ?? '', ' ', '-') == hostname ? '' : striptags(boardinfo?.model ?? '');
 	const branding = get_branding();
 	const logo_url = branding.logo ? media + '/branding/' + branding.logo : media + '/img/argon.svg';
 

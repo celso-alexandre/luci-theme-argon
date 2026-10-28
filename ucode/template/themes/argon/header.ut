@@ -21,7 +21,7 @@
 
 	const board = ubus.call('system', 'board');
 	const hostname = striptags(board?.hostname ?? '?');
-	const model = striptags(board?.model ?? '');
+	const model = replace(board?.model ?? '', ' ', '-') == hostname ? '' : striptags(board?.model ?? '');
 	// First-child routes keep the entry URL while resolving to a deeper page.
 	const page_path = length(ctx.path) > length(ctx.request_path) ? ctx.path : ctx.request_path;
 	include('themes/' + theme + '/head', { hostname: hostname, is_login: false });
