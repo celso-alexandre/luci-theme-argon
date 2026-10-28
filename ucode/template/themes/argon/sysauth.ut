@@ -38,6 +38,7 @@
 
 	const boardinfo = ubus.call("system", "board");
 	const hostname = striptags(boardinfo?.hostname ?? '?');
+	const model = striptags(boardinfo?.model ?? '');
 	const branding = get_branding();
 	const logo_url = branding.logo ? media + '/branding/' + branding.logo : media + '/img/argon.svg';
 
@@ -50,7 +51,7 @@
 		<div class="login-form">
 			<!-- Logo Start -->
 			<a class="brand" href="/"><img src="{{ logo_url }}" class="icon" alt="" data-fallback="{{ media }}/img/argon.svg" onerror="this.onerror=null;this.src=this.dataset.fallback">
-				<span class="brand-text">{{ hostname }}</span>
+				<span class="brand-text">{{ hostname }}{% if (model): %}<small style="display:block;font-size:.5em;font-weight:400;opacity:.75">{{ model }}</small>{% endif %}</span>
 			</a>
 			<!-- Logo End -->
 			<!-- Login Form Start -->
