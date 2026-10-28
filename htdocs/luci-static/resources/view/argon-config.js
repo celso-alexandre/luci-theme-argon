@@ -1,7 +1,6 @@
 'use strict';
 'require form';
 'require argon.branding as branding';
-'require argon.updates as updates';
 'require fs';
 'require rpc';
 'require uci';
@@ -104,8 +103,7 @@ return view.extend({
 				ui.addNotification(null, E('p', _('Failed to list background files: %s.').format(e.message)));
 				return [];
 			}),
-			branding.load(),
-			updates.load()
+			branding.load()
 		]);
 	},
 
@@ -114,9 +112,6 @@ return view.extend({
 
 		m = new form.Map('argon', _('Argon theme configuration'),
 			_('Here you can set the blur and transparency of the login page of argon theme, and manage the background pictures and videos. Chrome is recommended.'));
-
-		s = m.section(form.TypedSection);
-		s.render = function() { return updates.render(data[4], this.map); };
 
 		s = m.section(form.TypedSection, 'global', _('Theme configuration'));
 		s.addremove = false;
@@ -154,20 +149,6 @@ return view.extend({
 				preview.alt = loginStyles[style];
 			}
 		};
-
-		o = s.option(form.ListValue, 'online_wallpaper', _('Wallpaper source'));
-		o.value('none', _('Built-in'));
-		o.value('bing', _('Bing'));
-		o.value('unsplash', _('Unsplash'));
-		o.value('wallhaven', _('Wallhaven'));
-		o.default = 'none';
-		o.rmempty = false;
-
-		o = s.option(form.Value, 'use_api_key', _('Unsplash API access key'),
-			_('Required when using Unsplash wallpapers.'));
-		o.password = true;
-		o.depends('online_wallpaper', 'unsplash');
-		o.rmempty = true;
 
 		o = s.option(form.ListValue, 'mode', _('Theme mode'));
 		o.value('normal', _('Follow system'));
